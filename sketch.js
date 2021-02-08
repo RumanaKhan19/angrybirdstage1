@@ -1,39 +1,37 @@
-var movingRect,fixedRect;
+const Engine= Matter.Engine;
+const World= Matter.World;
+const Bodies= Matter.Bodies;
+
+
+var engine,world,object;
+var ground,ball;
 
 
 
 
 function setup() {
-  createCanvas(800,400);
-fixedRect=createSprite(300,400,50,80);
-fixedRect.shapeColor="green";
-fixedRect.debug=true;
+   var canvas= createCanvas(400,400);
+   engine=Engine.create();
+   world=engine.world;
 
-movingRect=createSprite(500,300,80,50);
-movingRect.shapeColor="green";
-movingRect.debug=true;
+   var ground_options={
+     isStatic: true
+   }
+  ground=Bodies.rectangle(200,390,200,20,ground_options);
+  World.add(world,ground);
+  
+  ball=Bodies.circle(200,100,20);
+  World.add(world,ball);
+  console.log(ground);
 }
+
 
 function draw() {
   background(255,255,255);  
-  movingRect.x=World.mouseX;
-  movingRect.y=World.mouseY;
-  console.log(movingRect.x-fixedRect.x);
+  Engine.update(engine);
+  rectMode(CENTER);
+  rect(object.position.x,object.position.y,50,50);
 
-  if(movingRect.x-fixedRect.x  < fixedRect.width /2+movingRect.width/2 &&
-    movingRect.x-fixedRect.x < fixedRect.width /2+movingRect.width/2 && 
-    movingRect.y-fixedRect.y < fixedRect.height/2+movingRect.height/2 &&
-    movingRect.y-fixedRect.y < fixedRect.height/2+movingRect.height/2 &&){
-    fixedRect.shapeColor="red";
-    movingRect.shapeColor="red";
-
-
-
-
-  }
-
-
-
-
-  drawSprites();
+  ellipseMode(RADIUS);
+  ellipse(ball.position.x,ball.position.y,20,20);
 }
