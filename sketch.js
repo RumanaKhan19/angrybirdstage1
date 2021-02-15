@@ -1,37 +1,26 @@
-const Engine= Matter.Engine;
+const Engine = Matter.Engine;
 const World= Matter.World;
-const Bodies= Matter.Bodies;
+const Bodies = Matter.Bodies;
 
+var engine, world;
+var box1;
+var box2;
+var ground;
 
-var engine,world,object;
-var ground,ball;
+function setup(){
+    var canvas = createCanvas(400,400);
+    engine = Engine.create();
+    world = engine.world;
 
-
-
-
-function setup() {
-   var canvas= createCanvas(400,400);
-   engine=Engine.create();
-   world=engine.world;
-
-   var ground_options={
-     isStatic: true
-   }
-  ground=Bodies.rectangle(200,390,200,20,ground_options);
-  World.add(world,ground);
-  
-  ball=Bodies.circle(200,100,20);
-  World.add(world,ball);
-  console.log(ground);
+    box2 = new Box(240,300,50,50);
+    box1 = new Box(200,100,50,50);
+    ground = new Ground(200,390,400,20);
 }
 
-
-function draw() {
-  background(255,255,255);  
-  Engine.update(engine);
-  rectMode(CENTER);
-  rect(object.position.x,object.position.y,50,50);
-
-  ellipseMode(RADIUS);
-  ellipse(ball.position.x,ball.position.y,20,20);
+function draw(){
+    background(0);
+    Engine.update(engine);
+    box1.display();
+    box2.display();
+    ground.display();
 }
